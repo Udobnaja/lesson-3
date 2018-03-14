@@ -1,0 +1,35 @@
+body{
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
+  background: $baseColor;
+}
+
+img,
+embed,
+object,
+video,
+picture {
+  max-width: 100%;
+}
+
+img, picture{
+  display: block;
+  height: auto;
+  min-height: 1px;
+  border-style: none;
+}
+
+article,
+aside,
+footer,
+header,
+nav,
+section,
+main{
+  display: block;
+}
+
+*, :after, :before {
+  box-sizing: border-box;
+}
