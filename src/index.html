@@ -9,7 +9,6 @@
 </head>
 <body class="page">
     <div class="monitor"> <!-- добавить стили мониору в том случае если видео не поддерживается-->
-        <!-- возможно добавить состояние - мол подгружается интерфейс -->
         <div class="monitor__panel monitor__panel_horizontal monitor__panel_top">
             <img src="./images/panel.svg" alt="top panel">
         </div>
@@ -28,11 +27,16 @@
 
         </div>
         <video class="monitor__screen"> <!--  с видео fps 30 fps-->
-            SEARCHING <br>
-            VIDEO SIGNAL…
         </video>
         <div class="monitor__target">
             <img src="./images/target.svg" alt="target">
+        </div>
+        <div class="monitor__information">
+            <div class="monitor__information-ico"></div>
+            <p class="monitor__information-text  accent-color">
+                SEARCHING<br>
+                VIDEO SIGNAL…
+            </p>
         </div>
         <div class="monitor__panel monitor__panel_vertical monitor__panel_vertical_row monitor__panel_right">
             <h2 class="headline headline_h1 accent-color vertical-text">VOLUME</h2>
