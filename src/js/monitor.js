@@ -1,4 +1,6 @@
-(function () {
+import { visualizeAudioStream } from './audio';
+
+(() => {
     const constraints = { audio: true, video: true};
     const video = document.querySelector('.monitor__screen');
     const targetCursor = document.querySelector('.monitor__target');
@@ -31,6 +33,9 @@
     function startVideo(stream) {
 
         mediaStream = stream;
+
+        /* Посмотреть, что происходить с потоком и какой использует аудио апи */
+        visualizeAudioStream(stream);
         
         if ("srcObject" in video) {
             video.srcObject = stream;
@@ -44,7 +49,8 @@
         }
     }
     
-    function stopVideo() {
+    function stopVideo(e) {
+        console.log(e);
         removeTracksFromMediaStream();
         toggleVideoVisibility({show: false});
     }
@@ -74,16 +80,11 @@
 
     // enum PermissionName {
     //     "geolocation",
-    //         "notifications",
-    //         "push",
-    //         "midi",
     //         "camera",
     //         "microphone",
     //         "speaker",
     //         "device-info",
-    //         "background-sync",
     //         "bluetooth",
-    //         "persistent-storage",
     //         "ambient-light-sensor",
     //         "accelerometer",
     //         "gyroscope",
