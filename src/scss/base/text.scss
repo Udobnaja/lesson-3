@@ -1,4 +1,6 @@
 .vertical-text{
   writing-mode: vertical-rl;
-  text-orientation: upright; /* не поддерживается в сафари и на мобилках неочень, остановись на это позже */
+  text-orientation: upright;
+  word-wrap: break-word;
+  width: 1ch;
 }
