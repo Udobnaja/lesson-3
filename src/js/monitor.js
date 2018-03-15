@@ -50,7 +50,6 @@
     }
     
     function toggleVideoVisibility({show}) {
-        console.log(show);
         video.classList[show? 'add' : 'remove']('monitor__screen_show');
         monitorInformation.classList[show? 'add' : 'remove']('monitor__information_hide');
         targetCursor.classList[show? 'add' : 'remove']('monitor__target_show');
