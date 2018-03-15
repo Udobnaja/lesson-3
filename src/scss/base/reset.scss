@@ -5,6 +5,18 @@ body{
   background: $baseColor;
 }
 
+html{
+  font-size: 16px;
+
+  @include media('(min-width : 798px)') {
+    font-size: 20px;
+  }
+
+  @include media('(min-width : 1280px)') {
+    font-size: 25px;
+  }
+}
+
 img,
 embed,
 object,

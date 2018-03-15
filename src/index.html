@@ -10,9 +10,37 @@
 <body class="page">
     <div class="monitor"> <!-- добавить стили мониору в том случае если видео не поддерживается-->
         <!-- возможно добавить состояние - мол подгружается интерфейс -->
+        <div class="monitor__panel monitor__panel_horizontal monitor__panel_top">
+            <img src="./images/panel.svg" alt="top panel">
+        </div>
+        <div class="monitor__panel monitor__panel_vertical monitor__panel_vertical_column monitor__panel_left">
+            <div class="monitor__panel-row">
+                <h2 class="headline headline_h1 accent-color">COORDINATES</h2>
+                <p class="paragraph base-color">54.712857</p>
+                <p class="paragraph base-color">20.52859</p>
+            </div>
+            <div class="monitor__panel-row">
+                <h2 class="headline headline_h1 accent-color">AROUND</h2>
+                <p class="paragraph base-color">7,9 °C</p>
+                <p class="paragraph base-color">757.4 mmHg.</p>
+                <p class="paragraph base-color">120 m</p>
+            </div>
+
+        </div>
         <video class="monitor__screen"> <!--  с видео fps 30 fps-->
-            Сообщение о том, что система видео наблюдения недоступна
+            SEARCHING <br>
+            VIDEO SIGNAL…
         </video>
+        <div class="monitor__target">
+            <img src="./images/target.svg" alt="target">
+        </div>
+        <div class="monitor__panel monitor__panel_vertical monitor__panel_vertical_row monitor__panel_right">
+            <h2 class="headline headline_h1 accent-color vertical-text">VOLUME</h2>
+            <div class="volume"></div>
+        </div>
+        <div class="monitor__panel monitor__panel_horizontal monitor__panel_bottom">
+            <img src="./images/panel.svg" alt="bottom panel">
+        </div>
     </div>
 </body>
 </html>
