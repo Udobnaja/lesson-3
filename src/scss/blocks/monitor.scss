@@ -113,6 +113,7 @@
   }
 
   &__information{
+    $m_info: &;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -126,6 +127,11 @@
     &_hide{
       opacity: 0;
       visibility: hidden;
+      #{$m_info}-ico{
+        &:after{
+          animation: none;
+        }
+      }
     }
 
     &-ico{
