@@ -1,7 +1,9 @@
 .monitor{
+  background: rgba(17, 90, 228, 1);
 
   &__screen{
     width: 100%;
+    mix-blend-mode: multiply;
   }
 
   &__canvas{
