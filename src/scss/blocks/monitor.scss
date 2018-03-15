@@ -4,20 +4,6 @@
   width: 100%;
   position: fixed;
 
-  // Убрать магические цифры
-
-  @keyframes eyeball-moving {
-    0%   {
-     transform: translateX(9px) translateY(5px);
-    }
-    50% {
-      transform: translateX(22px) translateY(5px);
-    }
-    100% {
-      transform: translateX(9px) translateY(5px);
-    }
-  }
-
   &__panel{
     position: absolute;
     z-index: 2;
@@ -120,20 +106,38 @@
     transition: opacity .3s;
     pointer-events: auto;
 
+    $eye-height: 37px;
+    $eye-width: 59px;
+    $eye-vertical-space: 10px;
+    $eye-horizontal-space: 10px;
+    $eyeball-size: $eye-height - $eye-vertical-space;
+
     &_hide{
       opacity: 0;
       pointer-events: none;
       #{$m_info}-ico{
         &:after{
           animation: none;
-          transform: translateX(9px) translateY(5px);
+          transform: translateX($eye-vertical-space) translateY($eye-vertical-space/2);
         }
       }
     }
 
+    @keyframes eyeball-moving {
+      0%   {
+        transform: translateX($eye-vertical-space) translateY($eye-vertical-space/2);
+      }
+      50% {
+        transform: translateX($eye-width - $eyeball-size*1.3) translateY($eye-vertical-space/2);
+      }
+      100% {
+        transform: translateX($eye-vertical-space) translateY($eye-vertical-space/2);
+      }
+    }
+
     &-ico{
-      width: 59px;
-      height: 37px;
+      width: $eye-width;
+      height: $eye-height;
       margin: 0 auto;
       background-image: url('./images/eye.svg');
       background-size: cover;
@@ -148,8 +152,8 @@
         left: 0;
         top: 0;
         background-image: url('./images/eyeball.svg');
-        width: 27px;
-        height: 27px;
+        width: $eyeball-size;
+        height: $eyeball-size;
         background-repeat: no-repeat;
         background-position: center;
         animation: eyeball-moving 3s infinite;
