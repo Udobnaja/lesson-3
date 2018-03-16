@@ -1,11 +1,11 @@
 .svg-target{
-  transition: transform .4s .3s;
+  transition: transform .4s 1.7s;
   /* 117px */
   /* 288 */
 
   .svg-target{
     &__line{
-      transition: transform .6s .3s;
+      transition: transform .6s 2.1s;
       &_right{
           transform: translateX(150px);
       }
@@ -38,3 +38,16 @@
     }
   }
 }
+
+//@keyframes glitch-anim {
+//  $steps: 10;
+//  @for $i from 0 through $steps {
+//    #{percentage($i*(1/$steps))} {
+//      clip: rect(random(100)+px, 9999px, random(100)+px, 0);
+//    }
+//  }
+//}
+//
+//.monitor__canvas{
+//  animation: glitch-anim 2s infinite linear alternate-reverse;
+//}
