@@ -105,6 +105,10 @@
     &_show{
       opacity: 1;
       pointer-events: auto;
+
+      .svg-target{
+        transform: scale(0.5);
+      }
     }
   }
 
