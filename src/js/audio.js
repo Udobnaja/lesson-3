@@ -13,6 +13,9 @@ const scaleItemHeight = 3;
 const filterOffset = 28;
 const averageRate = 0.5;
 const maxRate = 0.75;
+const maxRateColor = '#CE0D0C';
+const averageRateColor = 'yellow';
+const normalRateColor = 'white';
 
 if (AudioContext) {
     audioContext = new AudioContext();
@@ -21,7 +24,7 @@ if (AudioContext) {
     analyser.fftSize = fftSize;
     gainNode = audioContext.createGain();
 } else {
-    console.log('Динамики повреждены'); // дисейблить чужому динамик
+    console.log('Динамики повреждены'); // дисейблить хищнику динамик
 }
 
 export function visualizeAudioStream(stream){
@@ -45,12 +48,12 @@ export function visualizeAudioStream(stream){
         for (let i = 1; i <= scaleItemsCount; i++){
             if (i / capacity > averageRate){
                 if (i / capacity > maxRate) {
-                    canvasContext.strokeStyle = '#CE0D0C';
+                    canvasContext.strokeStyle = maxRateColor;
                 } else {
-                    canvasContext.strokeStyle = 'yellow';
+                    canvasContext.strokeStyle = averageRateColor;
                 }
             } else {
-                canvasContext.strokeStyle = 'white';
+                canvasContext.strokeStyle = normalRateColor;
             }
 
             canvasContext.strokeRect(0, canvasHeight - y, canvasWidth, scaleItemHeight);

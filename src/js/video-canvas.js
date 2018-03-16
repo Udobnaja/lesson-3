@@ -13,7 +13,7 @@ export function drawVideoOnCanvas() {
 
     context.drawImage(video, 0, 0, clientWidth, clientHeight);
 
-    getImageData();
+    // getImageData(); // снижает скорость fps
 
 }
 
