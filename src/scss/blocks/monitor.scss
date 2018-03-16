@@ -31,14 +31,14 @@
 
     &_top{
       top: 0;
-
-      img {
-        transform: rotate(180deg);
-      }
     }
 
     &_bottom{
       bottom: 0;
+
+      img {
+        transform: rotate(180deg);
+      }
     }
 
     &_left{
@@ -90,6 +90,25 @@
 
   }
 
+  @keyframes target-anim {
+
+    $steps: 8;
+
+    0%   {
+      transform: translateX(-50%) translateY(-50%);
+    }
+    $i: 1;
+    @while $i <= $steps {
+      #{percentage($i*(1/$steps))}{
+        transform: translateY(-(random(50) + 20)+%) translateX(-(random(50) + 20)+%);
+      }
+    $i: $i+0.2;
+    }
+    100% {
+      transform: translateX(-50%) translateY(-50%);
+    }
+  }
+
   &__target{
     position: absolute;
     top: 50%;
@@ -99,8 +118,9 @@
     max-width: 700px;
     z-index: 2;
     opacity: 0;
-    transition: opacity .5s;
+    transition: all .5s;
     pointer-events: none;
+    animation: target-anim 20s infinite;
 
     &_show{
       opacity: 1;
