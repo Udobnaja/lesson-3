@@ -1,10 +1,12 @@
 import { visualizeAudioStream } from './audio';
+import { drawVideoOnCanvas } from "./video-canvas";
 
 (() => {
     const constraints = { audio: true, video: true};
     const video = document.querySelector('.monitor__screen');
     const targetCursor = document.querySelector('.monitor__target');
     const monitorInformation = document.querySelector('.monitor__information');
+
     let mediaStream = null;
 
     console.log({avaibleConstrains: navigator.mediaDevices.getSupportedConstraints()});
@@ -46,6 +48,7 @@ import { visualizeAudioStream } from './audio';
         video.onloadedmetadata = () => {
             video.play();
             toggleVideoVisibility({show: true});
+            drawVideoOnCanvas();
         }
     }
     
@@ -56,7 +59,7 @@ import { visualizeAudioStream } from './audio';
     }
     
     function toggleVideoVisibility({show}) {
-        video.classList[show? 'add' : 'remove']('monitor__screen_show');
+        // video.classList[show? 'add' : 'remove']('monitor__screen_show');
         monitorInformation.classList[show? 'add' : 'remove']('monitor__information_hide');
         targetCursor.classList[show? 'add' : 'remove']('monitor__target_show');
     }
