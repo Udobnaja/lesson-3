@@ -1,0 +1,37 @@
+@keyframes get-messages {
+  0% {
+    transform: translate(0, -10%);
+  }
+  100% {
+    transform: translate(0, 160px)
+  }
+}
+
+.message{
+  max-width: 200px;
+  font-size: 0.32rem;
+  line-height: 1.625em;
+  height: 160px;
+  overflow: hidden;
+  transition: transform .1s;
+  position: relative;
+
+  &__text{
+    position: absolute;
+    animation: get-messages 2s infinite linear;
+
+    &:nth-child(2){
+      transform: translate(0, -100%);
+      animation-delay: 0.5s;
+    }
+
+    &:nth-child(3){
+      transform: translate(0, -100%);
+      animation-delay: .9s;
+    }
+    &:nth-child(4){
+      transform: translate(0, -100%);
+      animation-delay: 1.2s;
+    }
+  }
+}
