@@ -1,4 +1,4 @@
-import { visualizeAudioStream } from './audio';
+import { visualizeAudioStream, stopAudioStream } from './audio';
 import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
 
 (() => {
@@ -56,6 +56,7 @@ import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
         console.log(e);
         removeTracksFromMediaStream();
         removeVideoFromCanvas();
+        stopAudioStream();
         toggleVideoVisibility({show: false});
     }
     

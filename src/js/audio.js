@@ -64,6 +64,11 @@ export function visualizeAudioStream(stream){
     drawScale();
 }
 
+export async function stopAudioStream(){
+    await audioContext.close();
+    canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+}
+
 function connectNodes(stream) {
     let source = audioContext.createMediaStreamSource(stream);
     source.connect(analyser);
