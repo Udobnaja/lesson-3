@@ -8,7 +8,7 @@
     <title>Predator Vision</title>
 </head>
 <body class="page">
-    <div class="monitor"> <!-- добавить стили мониору в том случае если видео не поддерживается-->
+    <div class="monitor">
         <div class="monitor__panel monitor__panel_horizontal monitor__panel_top">
             <svg width="883px" height="35px" viewBox="0 0 883 35" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs>
@@ -79,12 +79,10 @@
                 <p class="paragraph base-color">757.4 mmHg.</p>
                 <p class="paragraph base-color">120 m</p>
             </div>
-
         </div>
         <canvas class="monitor__canvas"></canvas>
-        <video class="monitor__screen">
-        </video>
-        <!--0 0 342 599 248 539 0 109-->
+        <canvas class="monitor__canvas monitor__canvas_copy"></canvas>
+        <video class="monitor__screen"></video>
         <div class="monitor__target">
             <svg class="svg svg-target svg-target_right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 720">
                 <g class="svg-target__container" style="fill-opacity:0.3;fill:#CE0D0C;stroke-width:2;stroke:#CE0D0C">
@@ -147,6 +145,7 @@
                 </g>
             </svg>
         </div>
+        <div class="monitor__glitch"></div>
     </div>
 </body>
 </html>

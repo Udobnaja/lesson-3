@@ -1,9 +1,12 @@
 const canvas = document.querySelector('.monitor__canvas');
 const context = canvas.getContext('2d');
+const canvasCopy = document.querySelector('.monitor__canvas_copy');
+const contextCopy = canvasCopy.getContext('2d');
 const video = document.querySelector('.monitor__screen');
 
 let clientWidth = null;
 let clientHeight = null;
+
 
 export function drawVideoOnCanvas() {
     requestAnimationFrame(drawVideoOnCanvas);
@@ -12,6 +15,7 @@ export function drawVideoOnCanvas() {
     }
 
     context.drawImage(video, 0, 0, clientWidth, clientHeight);
+    contextCopy.drawImage(video, 0, 0, clientWidth, clientHeight);
 
     // getImageData(); // снижает скорость fps
 
@@ -24,6 +28,8 @@ function setCanvasSizes() {
     clientHeight = video.clientHeight;
     canvas.width = clientWidth;
     canvas.height = clientHeight;
+    canvasCopy.width = clientWidth;
+    canvasCopy.height = clientHeight;
 }
 
 function getImageData() {
