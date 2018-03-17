@@ -3,9 +3,10 @@ import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
 
 (() => {
     const constraints = { audio: true, video: true};
-    const video = document.querySelector('.monitor__screen');
-    const targetCursor = document.querySelector('.monitor__target');
-    const monitorInformation = document.querySelector('.monitor__information');
+    const monitor = document.querySelector('.monitor');
+    const video = monitor.querySelector('.monitor__screen');
+    const targetCursor = monitor.querySelector('.monitor__target');
+    const monitorInformation = monitor.querySelector('.monitor__information');
 
     let mediaStream = null;
 
@@ -60,6 +61,7 @@ import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
     
     function toggleVideoVisibility({show}) {
         // video.classList[show? 'add' : 'remove']('monitor__screen_show');
+        monitor.classList[show? 'add' : 'remove']('monitor_load');
         monitorInformation.classList[show? 'add' : 'remove']('monitor__information_hide');
         targetCursor.classList[show? 'add' : 'remove']('monitor__target_show');
     }
