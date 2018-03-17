@@ -1,9 +1,3 @@
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioContext;
-let analyser;
-let gainNode;
-let canvasWidth;
-let canvasHeight;
 const volume = document.querySelector('.volume');
 const volumeScale = document.querySelector('.volume__scale');
 const canvasContext = volumeScale.getContext("2d");
@@ -16,6 +10,12 @@ const maxRate = 0.75;
 const maxRateColor = '#CE0D0C';
 const averageRateColor = 'yellow';
 const normalRateColor = 'white';
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+let audioContext;
+let analyser;
+let gainNode;
+let canvasWidth;
+let canvasHeight;
 
 if (AudioContext) {
     audioContext = new AudioContext();
