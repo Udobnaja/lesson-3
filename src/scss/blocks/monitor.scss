@@ -320,6 +320,24 @@
       animation: text-moving 1s step-end infinite;
     }
 
+    &_delay_100ms{
+      span{
+        animation-delay: 0.1s;
+      }
+    }
+
+    &_speed_5s{
+      span{
+        animation-duration: 5s;
+      }
+    }
+
+    &_speed_10s{
+      span{
+        animation-duration: 10s;
+      }
+    }
+
   }
 
 }
