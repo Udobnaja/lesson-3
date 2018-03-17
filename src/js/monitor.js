@@ -81,29 +81,8 @@ import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
     initializeMediaDeviceSupport();
     startGettingMediaStream();
 
-    // enum PermissionName {
-    //     "geolocation",
-    //         "camera",
-    //         "microphone",
-    //         "speaker",
-    //         "device-info",
-    //         "bluetooth",
-    //         "ambient-light-sensor",
-    //         "accelerometer",
-    //         "gyroscope",
-    //         "magnetometer",
-    //         "clipboard",
-    // };
-
     navigator.permissions.query({name:'camera'}).then((permissionStatus) => {
-
         console.log({state: permissionStatus.state});
-        /*
-         enum PermissionState {
-             "granted",
-             "denied",
-             "prompt",
-         }; */
 
         permissionStatus.onchange = () => {
             startGettingMediaStream();
