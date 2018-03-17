@@ -119,7 +119,8 @@
     &_copy{
       mix-blend-mode: color-dodge;
       clip-path: polygon($polygon);
-      animation: canvas-glitch 1.5s infinite;
+      animation: canvas-glitch 1.5s 2.5s infinite;
+      transform: translateY(-100%);
     }
   }
 
