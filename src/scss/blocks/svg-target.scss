@@ -1,8 +1,6 @@
 .svg-target{
   transition: transform .4s 1.7s;
-  /* 117px */
-  /* 288 */
-
+  opacity: 0;
   .svg-target{
     &__line{
       transition: transform .6s 2.1s;
@@ -23,6 +21,7 @@
 
 .monitor__target_show{
   .svg-target{
+    opacity: 1;
     &__line{
       &_right{
         transform: translateX(80px) translateY(50px);
