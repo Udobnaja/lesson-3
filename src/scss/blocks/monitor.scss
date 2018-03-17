@@ -289,4 +289,37 @@
     }
   }
 
+  @keyframes text-moving {
+    0%, 20%  {
+      transform: translateY(0);
+    }
+    20%, 40% {
+      transform: translateY(-20%);
+    }
+    40%, 60% {
+      transform: translateY(-20%);
+    }
+    60%, 80% {
+      transform: translateY(-60%);
+    }
+    80%, 100% {
+      transform: translateY(-80%);
+    }
+    100%, 0% {
+      transform: translateY(0);
+    }
+  }
+
+  &__paragraph{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 1.440em;
+    span {
+      display: inline-block;
+      animation: text-moving 1s step-end infinite;
+    }
+
+  }
+
 }
