@@ -15,6 +15,7 @@ let analyser = null;
 let gainNode = null;
 let canvasWidth = null;
 let canvasHeight = null;
+let requestAnimationId = null;
 
 export function visualizeAudioStream(stream){
     if (!isAudioContextAvailable()) return;
@@ -33,7 +34,7 @@ export function visualizeAudioStream(stream){
     updateCanvasSize();
 
     const drawScale = ()  => {
-        requestAnimationFrame(drawScale);
+        requestAnimationId = requestAnimationFrame(drawScale);
         let buffer = new Float32Array(analyser.frequencyBinCount);
         analyser.getFloatFrequencyData(buffer);
 
@@ -69,6 +70,7 @@ export async function stopAudioStream(){
     if (audioContext){
         await audioContext.suspend();
         canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+        cancelAnimationFrame(requestAnimationId);
     }
 }
 
