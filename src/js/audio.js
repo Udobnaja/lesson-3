@@ -10,24 +10,25 @@ const maxRate = 0.75;
 const maxRateColor = '#CE0D0C';
 const averageRateColor = 'yellow';
 const normalRateColor = 'white';
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-let audioContext;
-let analyser;
-let gainNode;
-let canvasWidth;
-let canvasHeight;
-
-if (AudioContext) {
-    audioContext = new AudioContext();
-    analyser = audioContext.createAnalyser();
-    analyser.smoothingTimeConstant = smoothing;
-    analyser.fftSize = fftSize;
-    gainNode = audioContext.createGain();
-} else {
-    console.log('Динамики повреждены'); // дисейблить хищнику динамик
-}
+let audioContext = null;
+let analyser = null;
+let gainNode = null;
+let canvasWidth = null;
+let canvasHeight = null;
 
 export function visualizeAudioStream(stream){
+    if (!isAudioContextAvailable()) return;
+
+    if (!audioContext){
+        audioContext = new AudioContext();
+        analyser = audioContext.createAnalyser();
+        analyser.smoothingTimeConstant = smoothing;
+        analyser.fftSize = fftSize;
+        gainNode = audioContext.createGain();
+    } else {
+        audioContext.resume();
+    }
+
     connectNodes(stream);
     updateCanvasSize();
 
@@ -65,7 +66,7 @@ export function visualizeAudioStream(stream){
 }
 
 export async function stopAudioStream(){
-    await audioContext.close();
+    await audioContext.suspend();
     canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
 }
 
@@ -83,6 +84,11 @@ function updateCanvasSize() {
     canvasHeight = volume.clientHeight;
     canvasContext.canvas.width = canvasWidth;
     canvasContext.canvas.height = canvasHeight;
+}
+
+function isAudioContextAvailable() {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    return !!AudioContext;
 }
 
 

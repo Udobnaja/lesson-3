@@ -35,8 +35,6 @@ import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
     function startVideo(stream) {
 
         mediaStream = stream;
-
-        /* Посмотреть, что происходить с потоком и какой использует аудио апи */
         visualizeAudioStream(stream);
         
         if ("srcObject" in video) {
