@@ -1,5 +1,5 @@
 import { visualizeAudioStream } from './audio';
-import { drawVideoOnCanvas } from "./video-canvas";
+import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
 
 (() => {
     const constraints = { audio: true, video: true};
@@ -55,6 +55,7 @@ import { drawVideoOnCanvas } from "./video-canvas";
     function stopVideo(e) {
         console.log(e);
         removeTracksFromMediaStream();
+        removeVideoFromCanvas();
         toggleVideoVisibility({show: false});
     }
     

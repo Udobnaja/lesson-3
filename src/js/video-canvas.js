@@ -3,13 +3,15 @@ const context = canvas.getContext('2d');
 const canvasCopy = document.querySelector('.monitor__canvas_copy');
 const contextCopy = canvasCopy.getContext('2d');
 const video = document.querySelector('.monitor__screen');
+let requestAnimationId = null;
 
 let clientWidth = null;
 let clientHeight = null;
 
 
 export function drawVideoOnCanvas() {
-    requestAnimationFrame(drawVideoOnCanvas);
+    requestAnimationId = requestAnimationFrame(drawVideoOnCanvas);
+
     if (!clientWidth || !clientHeight){
         setCanvasSizes();
     }
@@ -19,6 +21,12 @@ export function drawVideoOnCanvas() {
 
     // getImageData(); // снижает скорость fps
 
+}
+
+export function removeVideoFromCanvas() {
+    cancelAnimationFrame(requestAnimationId);
+    context.clearRect(0, 0, clientWidth, clientHeight);
+    contextCopy.clearRect(0, 0, clientWidth, clientHeight);
 }
 
 /* При ресайзе так же нужно будет пересчитать размеры */
