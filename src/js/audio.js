@@ -33,7 +33,7 @@ export function visualizeAudioStream(stream){
     updateCanvasSize();
 
     const drawScale = ()  => {
-        requestAnimationFrame(drawScale); /* посмотри после возможно нужно window.cancelAnimationFrame(requestID); */
+        requestAnimationFrame(drawScale);
         let buffer = new Float32Array(analyser.frequencyBinCount);
         analyser.getFloatFrequencyData(buffer);
 
@@ -66,8 +66,10 @@ export function visualizeAudioStream(stream){
 }
 
 export async function stopAudioStream(){
-    await audioContext.suspend();
-    canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    if (audioContext){
+        await audioContext.suspend();
+        canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    }
 }
 
 function connectNodes(stream) {
