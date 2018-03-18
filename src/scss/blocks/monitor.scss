@@ -1,4 +1,6 @@
 .monitor{
+  $side-offset: 45px;
+
   background: rgba(17, 90, 228, 1);
   width: 100%;
   position: fixed;
@@ -21,8 +23,6 @@
 
 
   &__panel{
-
-    $side-offset: 45px;
 
     position: absolute;
     z-index: 2;
@@ -342,6 +342,17 @@
         animation-duration: 10s;
       }
     }
+
+  }
+
+  &__sound-frequency{
+    text-align: right;
+    position: absolute;
+    top: 45px;
+    right: $side-offset;
+    z-index: 2;
+    width: 20%;
+    max-width: 350px;
 
   }
 

@@ -1,20 +1,26 @@
-const volume = document.querySelector('.volume');
-const volumeScale = document.querySelector('.volume__scale');
-const canvasContext = volumeScale.getContext("2d");
+const volumeNode = document.querySelector('.volume');
+const volumeScaleNode = volumeNode.querySelector('.volume__scale');
+const volumeContext = volumeScaleNode.getContext("2d");
+const frequencyNode = document.querySelector('.sound-frequency');
+const waveCanvas = frequencyNode.querySelector('.sound-frequency__wave');
+const waveContext = waveCanvas.getContext("2d");
 const fftSize = 2048;
 const smoothing = 0.8;
 const decibelHeight = 3;
 const filterOffset = 28;
 const averageRate = 0.5;
 const maxRate = 0.75;
+const waveWidth = 1;
 const maxRateColor = '#CE0D0C';
 const averageRateColor = 'yellow';
 const normalRateColor = 'white';
 let audioContext = null;
 let analyser = null;
 let gainNode = null;
-let canvasWidth = null;
-let canvasHeight = null;
+let volumeNodeWidth = null;
+let volumeNodeHeight = null;
+let frequencyNodeWidth = null;
+let frequencyNodeHeight = null;
 let requestAnimationId = null;
 
 export function visualizeAudioStream(stream){
@@ -31,17 +37,21 @@ export function visualizeAudioStream(stream){
     }
 
     connectNodes(stream);
-    updateCanvasSize();
-
+    [volumeNodeWidth, volumeNodeHeight] = updateCanvasSize({node: volumeNode, context: volumeContext});
+    [frequencyNodeWidth, frequencyNodeHeight] = updateCanvasSize({node: frequencyNode, context: waveContext});
     const loopAnimateDraw = ()  => {
         requestAnimationId = requestAnimationFrame(loopAnimateDraw);
 
-        let buffer = new Float32Array(analyser.frequencyBinCount);
-        analyser.getFloatFrequencyData(buffer);
+        let buffers = new Float32Array(analyser.frequencyBinCount);
+        analyser.getFloatFrequencyData(buffers);
 
-        let range = getBufferRange({buffer});
+        let range = getBufferRange({buffers});
 
         drawDecibels({range});
+
+        analyser.getFloatTimeDomainData(buffers);
+
+        drawFrequencyWaves({buffers});
     };
 
     loopAnimateDraw();
@@ -50,7 +60,8 @@ export function visualizeAudioStream(stream){
 export async function stopAudioStream(){
     if (audioContext){
         await audioContext.suspend();
-        canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+        volumeContext.clearRect(0, 0, volumeNodeWidth, volumeNodeHeight);
+        waveContext.clearRect(0, 0, frequencyNodeWidth, frequencyNodeHeight);
         cancelAnimationFrame(requestAnimationId);
     }
 }
@@ -62,45 +73,58 @@ function connectNodes(stream) {
     gainNode.connect(audioContext.destination);
 }
 
-function getBufferRange({buffer}) {
-    let max = Math.max(...buffer) + filterOffset;
+function getBufferRange({buffers}) {
+    let max = Math.max(...buffers) + filterOffset;
     return Math.pow(10, max / 20);
 }
 
 function drawDecibels({range}){
     let y = 0;
-    let decibelsTotalHeight = canvasHeight * range;
+    let decibelsTotalHeight = volumeNodeHeight * range;
     let decibelsCount = Math.trunc(decibelsTotalHeight / decibelHeight);
-    let capacity = Math.trunc(canvasHeight / decibelHeight);
+    let capacity = Math.trunc(volumeNodeHeight / decibelHeight);
 
-    canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    volumeContext.clearRect(0, 0, volumeNodeWidth, volumeNodeHeight);
 
     for (let i = 1; i <= decibelsCount; i++){
         if (i / capacity > averageRate){
             if (i / capacity > maxRate) {
-                canvasContext.strokeStyle = maxRateColor;
+                volumeContext.strokeStyle = maxRateColor;
             } else {
-                canvasContext.strokeStyle = averageRateColor;
+                volumeContext.strokeStyle = averageRateColor;
             }
         } else {
-            canvasContext.strokeStyle = normalRateColor;
+            volumeContext.strokeStyle = normalRateColor;
         }
 
-        canvasContext.strokeRect(0, canvasHeight - y, canvasWidth, decibelHeight);
+        volumeContext.strokeRect(0, volumeNodeHeight - y, volumeNodeWidth, decibelHeight);
         y += decibelHeight;
     }
 }
 
-function updateCanvasSize() {
-    canvasWidth = volume.clientWidth;
-    canvasHeight = volume.clientHeight;
-    canvasContext.canvas.width = canvasWidth;
-    canvasContext.canvas.height = canvasHeight;
+function updateCanvasSize({node, context}) {
+    return [context.canvas.width = node.clientWidth, context.canvas.height = node.clientHeight]
 }
 
 function isAudioContextAvailable() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     return !!AudioContext;
+}
+
+function drawFrequencyWaves({buffers}) {
+    waveContext.clearRect(0, 0, frequencyNodeWidth, frequencyNodeHeight);
+    waveContext.beginPath();
+    waveContext.lineWidth = waveWidth;
+    waveContext.strokeStyle = normalRateColor;
+    waveContext.moveTo(0,  frequencyNodeHeight / 2);
+    const length = buffers.length;
+    for (let i = 1;  i < buffers.length; i++){
+        let val = (buffers[i] + 1) / 2;
+        let x = frequencyNodeWidth * (i / length);
+        let y = val * frequencyNodeHeight;
+        waveContext.lineTo(x, y);
+    }
+    waveContext.stroke();
 }
 
 
