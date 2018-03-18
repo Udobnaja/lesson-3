@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin"),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     CleanWebpackPlugin = require('clean-webpack-plugin'),
+    CopyWebpackPlugin = require('copy-webpack-plugin'),
     autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -109,7 +110,13 @@ module.exports = {
         }),
         new ExtractTextPlugin({
             filename:'./[name].css'
-        })
+        }),
+        new CopyWebpackPlugin([
+            {
+              from: ('src/js/worker.js'),
+               to: '[name].[ext]'
+            }
+        ]),
     ],
     devtool : "source-map"
 };

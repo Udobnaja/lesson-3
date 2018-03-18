@@ -21,6 +21,9 @@
 
 
   &__panel{
+
+    $side-offset: 45px;
+
     position: absolute;
     z-index: 2;
 
@@ -47,10 +50,12 @@
 
     &_top{
       top: 0;
+      justify-content: flex-start;
     }
 
     &_bottom{
       bottom: 0;
+      justify-content: flex-end;
 
       svg {
         transform: rotate(180deg);
@@ -58,11 +63,11 @@
     }
 
     &_left{
-      left: 45px;
+      left: $side-offset;
     }
 
     &_right{
-      right: 45px;
+      right: $side-offset;
     }
 
     &-row{

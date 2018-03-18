@@ -1,5 +1,6 @@
 import { visualizeAudioStream, stopAudioStream } from './audio';
 import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
+import { initPlanetGeometry, animatePlanet } from "./planet";
 
 (() => {
     const constraints = { audio: true, video: true};
@@ -82,14 +83,18 @@ import { drawVideoOnCanvas, removeVideoFromCanvas } from "./video-canvas";
 
     initializeMediaDeviceSupport();
     startGettingMediaStream();
+    initPlanetGeometry();
+    animatePlanet();
 
-    navigator.permissions.query({name:'camera'}).then((permissionStatus) => {
+    navigator.permissions.query({name:'camera'})
+        .then((permissionStatus) => {
         console.log({state: permissionStatus.state});
 
         permissionStatus.onchange = () => {
             startGettingMediaStream();
         };
-    }).catch((e) => {
+    })
+        .catch((e) => {
         console.log(e)
     });
 })();
