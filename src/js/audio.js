@@ -1,10 +1,10 @@
-import { updateCanvasSize } from "./utils/canvas";
+import {updateCanvasSize} from './utils/canvas';
 const volumeNode = document.querySelector('.volume');
 const volumeScaleNode = volumeNode.querySelector('.volume__scale');
-const volumeContext = volumeScaleNode.getContext("2d");
+const volumeContext = volumeScaleNode.getContext('2d');
 const frequencyNode = document.querySelector('.sound-frequency');
 const waveCanvas = frequencyNode.querySelector('.sound-frequency__wave');
-const waveContext = waveCanvas.getContext("2d");
+const waveContext = waveCanvas.getContext('2d');
 const fftSize = 2048;
 const smoothing = 0.8;
 const decibelHeight = 3;
@@ -24,10 +24,12 @@ let frequencyNodeWidth = null;
 let frequencyNodeHeight = null;
 let requestAnimationId = null;
 
-export function visualizeAudioStream(stream){
-    if (!isAudioContextAvailable()) return;
+export function visualizeAudioStream(stream) {
+    if (!isAudioContextAvailable()) {
+        return;
+    }
 
-    if (!audioContext){
+    if (!audioContext) {
         audioContext = new AudioContext();
         analyser = audioContext.createAnalyser();
         analyser.smoothingTimeConstant = smoothing;
@@ -40,7 +42,7 @@ export function visualizeAudioStream(stream){
     connectNodes(stream);
     [volumeNodeWidth, volumeNodeHeight] = updateCanvasSize({node: volumeNode, context: volumeContext});
     [frequencyNodeWidth, frequencyNodeHeight] = updateCanvasSize({node: frequencyNode, context: waveContext});
-    const loopAnimateDraw = ()  => {
+    const loopAnimateDraw = () => {
         requestAnimationId = requestAnimationFrame(loopAnimateDraw);
 
         let buffers = new Float32Array(analyser.frequencyBinCount);
@@ -58,8 +60,8 @@ export function visualizeAudioStream(stream){
     loopAnimateDraw();
 }
 
-export async function stopAudioStream(){
-    if (audioContext){
+export async function stopAudioStream() {
+    if (audioContext) {
         await audioContext.suspend();
         volumeContext.clearRect(0, 0, volumeNodeWidth, volumeNodeHeight);
         waveContext.clearRect(0, 0, frequencyNodeWidth, frequencyNodeHeight);
@@ -79,7 +81,7 @@ function getBufferRange({buffers}) {
     return Math.pow(10, max / 20);
 }
 
-function drawDecibels({range}){
+function drawDecibels({range}) {
     let y = 0;
     let decibelsTotalHeight = volumeNodeHeight * range;
     let decibelsCount = Math.trunc(decibelsTotalHeight / decibelHeight);
@@ -87,8 +89,8 @@ function drawDecibels({range}){
 
     volumeContext.clearRect(0, 0, volumeNodeWidth, volumeNodeHeight);
 
-    for (let i = 1; i <= decibelsCount; i++){
-        if (i / capacity > averageRate){
+    for (let i = 1; i <= decibelsCount; i++) {
+        if (i / capacity > averageRate) {
             if (i / capacity > maxRate) {
                 volumeContext.strokeStyle = maxRateColor;
             } else {
@@ -105,7 +107,7 @@ function drawDecibels({range}){
 
 function isAudioContextAvailable() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
-    return !!AudioContext;
+    return Boolean(AudioContext);
 }
 
 function drawFrequencyWaves({buffers}) {
@@ -113,9 +115,9 @@ function drawFrequencyWaves({buffers}) {
     waveContext.beginPath();
     waveContext.lineWidth = waveWidth;
     waveContext.strokeStyle = normalRateColor;
-    waveContext.moveTo(0,  frequencyNodeHeight / 2);
+    waveContext.moveTo(0, frequencyNodeHeight / 2);
     const length = buffers.length;
-    for (let i = 1;  i < buffers.length; i++){
+    for (let i = 1; i < buffers.length; i++) {
         let val = (buffers[i] + 1) / 2;
         let x = frequencyNodeWidth * (i / length);
         let y = val * frequencyNodeHeight;
@@ -123,5 +125,3 @@ function drawFrequencyWaves({buffers}) {
     }
     waveContext.stroke();
 }
-
-

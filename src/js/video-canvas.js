@@ -1,4 +1,4 @@
-import {updateCanvasSize} from "./utils/canvas";
+import {updateCanvasSize} from './utils/canvas';
 const canvas = document.querySelector('.monitor__canvas');
 const context = canvas.getContext('2d');
 const canvasCopy = document.querySelector('.monitor__canvas_copy');
@@ -13,7 +13,7 @@ let clientHeight = null;
 export function drawVideoOnCanvas() {
     requestAnimationId = requestAnimationFrame(drawVideoOnCanvas);
 
-    if (!clientWidth || !clientHeight){
+    if (!clientWidth || !clientHeight) {
         [clientWidth, clientHeight] = updateCanvasSize({node: video, context: context});
         let copy = updateCanvasSize({node: video, context: contextCopy});
     }

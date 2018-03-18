@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 
-let camera, scene, renderer, sphere;
+let camera = null;
+let scene = null;
+let renderer = null;
+let sphere = null;
 const width = 150;
 const height = 150;
 const texture = './images/planet.jpg';
@@ -25,7 +28,7 @@ export function initPlanetGeometry() {
     animatePlanet();
 }
 
-function animatePlanet() {
+export function animatePlanet() {
 
     requestAnimationFrame(animatePlanet);
 

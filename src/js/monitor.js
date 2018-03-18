@@ -1,5 +1,5 @@
-import {initPlanetGeometry} from "./planet";
-import {initStream} from "./stream";
+import {initPlanetGeometry} from './planet';
+import {initStream} from './stream';
 
 (() => {
     initStream();

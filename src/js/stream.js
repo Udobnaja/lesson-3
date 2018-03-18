@@ -1,10 +1,10 @@
-import {visualizeAudioStream, stopAudioStream} from "./audio";
-import {drawVideoOnCanvas, removeVideoFromCanvas} from "./video-canvas";
+import {visualizeAudioStream, stopAudioStream} from './audio';
+import {drawVideoOnCanvas, removeVideoFromCanvas} from './video-canvas';
 const monitor = document.querySelector('.monitor');
 const video = monitor.querySelector('.monitor__screen');
 const targetCursor = monitor.querySelector('.monitor__target');
 const monitorInformation = monitor.querySelector('.monitor__information');
-const constraints = { audio: true, video: true};
+const constraints = {audio: true, video: true};
 
 let mediaStream = null;
 
@@ -24,7 +24,7 @@ function initializeMediaDeviceSupport() {
             return new Promise((resolve, reject) =>{
                 getUserMedia.call(navigator, constraints, resolve, reject);
             });
-        }
+        };
     }
 }
 
@@ -35,7 +35,7 @@ function requestMediaStream() {
 }
 
 function streamPermissionOnChange() {
-    navigator.permissions.query({name:'camera'})
+    navigator.permissions.query({name: 'camera'})
         .then((permissionStatus) => {
             console.log({state: permissionStatus.state});
 
@@ -44,7 +44,7 @@ function streamPermissionOnChange() {
             };
         })
         .catch((e) => {
-            console.log(e)
+            console.log(e);
         });
 }
 
@@ -56,8 +56,8 @@ function toggleVideoVisibility({show}) {
 }
 
 function removeTracksFromMediaStream() {
-    if (mediaStream){
-        for (let track of mediaStream.getTracks()){
+    if (mediaStream) {
+        for (let track of mediaStream.getTracks()) {
             mediaStream.removeTrack(track);
         }
     }
@@ -68,7 +68,7 @@ function startStream(stream) {
     mediaStream = stream;
     visualizeAudioStream(stream);
 
-    if ("srcObject" in video) {
+    if ('srcObject' in video) {
         video.srcObject = stream;
     } else {
         video.src = URL.createObjectURL(stream);
@@ -78,7 +78,7 @@ function startStream(stream) {
         video.play();
         toggleVideoVisibility({show: true});
         drawVideoOnCanvas();
-    }
+    };
 }
 
 function stopStream(e) {
