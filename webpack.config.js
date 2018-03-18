@@ -96,13 +96,6 @@ module.exports = {
             }
         ]
     },
-    externals: {
-        tracking: {
-            global: 'tracking',
-            commonjs: 'tracking',
-            amd: 'tracking'
-        }
-    },
     plugins: [
         new CleanWebpackPlugin(['dist']),
         new HtmlWebPackPlugin({
