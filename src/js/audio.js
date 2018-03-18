@@ -3,7 +3,7 @@ const volumeScale = document.querySelector('.volume__scale');
 const canvasContext = volumeScale.getContext("2d");
 const fftSize = 2048;
 const smoothing = 0.8;
-const scaleItemHeight = 3;
+const decibelHeight = 3;
 const filterOffset = 28;
 const averageRate = 0.5;
 const maxRate = 0.75;
@@ -33,37 +33,18 @@ export function visualizeAudioStream(stream){
     connectNodes(stream);
     updateCanvasSize();
 
-    const drawScale = ()  => {
-        requestAnimationId = requestAnimationFrame(drawScale);
+    const loopAnimateDraw = ()  => {
+        requestAnimationId = requestAnimationFrame(loopAnimateDraw);
+
         let buffer = new Float32Array(analyser.frequencyBinCount);
         analyser.getFloatFrequencyData(buffer);
 
-        let max = Math.max(...buffer) + filterOffset;
-        let level = Math.pow(10, max / 20);
+        let range = getBufferRange({buffer});
 
-        canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
-
-        let y = 0;
-        let newHeight = canvasHeight * level;
-        let scaleItemsCount = Math.trunc(newHeight / scaleItemHeight);
-        let capacity = Math.trunc(canvasHeight / scaleItemHeight);
-        for (let i = 1; i <= scaleItemsCount; i++){
-            if (i / capacity > averageRate){
-                if (i / capacity > maxRate) {
-                    canvasContext.strokeStyle = maxRateColor;
-                } else {
-                    canvasContext.strokeStyle = averageRateColor;
-                }
-            } else {
-                canvasContext.strokeStyle = normalRateColor;
-            }
-
-            canvasContext.strokeRect(0, canvasHeight - y, canvasWidth, scaleItemHeight);
-            y += scaleItemHeight;
-        }
+        drawDecibels({range});
     };
 
-    drawScale();
+    loopAnimateDraw();
 }
 
 export async function stopAudioStream(){
@@ -81,7 +62,34 @@ function connectNodes(stream) {
     gainNode.connect(audioContext.destination);
 }
 
-/* При ресайзе так же нужно будет пересчитать размеры */
+function getBufferRange({buffer}) {
+    let max = Math.max(...buffer) + filterOffset;
+    return Math.pow(10, max / 20);
+}
+
+function drawDecibels({range}){
+    let y = 0;
+    let decibelsTotalHeight = canvasHeight * range;
+    let decibelsCount = Math.trunc(decibelsTotalHeight / decibelHeight);
+    let capacity = Math.trunc(canvasHeight / decibelHeight);
+
+    canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    for (let i = 1; i <= decibelsCount; i++){
+        if (i / capacity > averageRate){
+            if (i / capacity > maxRate) {
+                canvasContext.strokeStyle = maxRateColor;
+            } else {
+                canvasContext.strokeStyle = averageRateColor;
+            }
+        } else {
+            canvasContext.strokeStyle = normalRateColor;
+        }
+
+        canvasContext.strokeRect(0, canvasHeight - y, canvasWidth, decibelHeight);
+        y += decibelHeight;
+    }
+}
 
 function updateCanvasSize() {
     canvasWidth = volume.clientWidth;
