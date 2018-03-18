@@ -1,3 +1,4 @@
+import {updateCanvasSize} from "./utils/canvas";
 const canvas = document.querySelector('.monitor__canvas');
 const context = canvas.getContext('2d');
 const canvasCopy = document.querySelector('.monitor__canvas_copy');
@@ -13,7 +14,8 @@ export function drawVideoOnCanvas() {
     requestAnimationId = requestAnimationFrame(drawVideoOnCanvas);
 
     if (!clientWidth || !clientHeight){
-        setCanvasSizes();
+        [clientWidth, clientHeight] = updateCanvasSize({node: video, context: context});
+        let copy = updateCanvasSize({node: video, context: contextCopy});
     }
 
     context.drawImage(video, 0, 0, clientWidth, clientHeight);
@@ -30,15 +32,6 @@ export function removeVideoFromCanvas() {
 }
 
 /* При ресайзе так же нужно будет пересчитать размеры */
-
-function setCanvasSizes() {
-    clientWidth = video.clientWidth;
-    clientHeight = video.clientHeight;
-    canvas.width = clientWidth;
-    canvas.height = clientHeight;
-    canvasCopy.width = clientWidth;
-    canvasCopy.height = clientHeight;
-}
 
 function getImageData() {
     let data = context.getImageData(0,0, clientWidth, clientHeight);

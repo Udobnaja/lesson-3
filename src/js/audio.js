@@ -1,3 +1,4 @@
+import { updateCanvasSize } from "./utils/canvas";
 const volumeNode = document.querySelector('.volume');
 const volumeScaleNode = volumeNode.querySelector('.volume__scale');
 const volumeContext = volumeScaleNode.getContext("2d");
@@ -100,10 +101,6 @@ function drawDecibels({range}){
         volumeContext.strokeRect(0, volumeNodeHeight - y, volumeNodeWidth, decibelHeight);
         y += decibelHeight;
     }
-}
-
-function updateCanvasSize({node, context}) {
-    return [context.canvas.width = node.clientWidth, context.canvas.height = node.clientHeight]
 }
 
 function isAudioContextAvailable() {
