@@ -22,9 +22,10 @@ export function initPlanetGeometry() {
     renderer.setSize(width, height);
     planet.appendChild(renderer.domElement);
 
+    animatePlanet();
 }
 
-export function animatePlanet() {
+function animatePlanet() {
 
     requestAnimationFrame(animatePlanet);
 
