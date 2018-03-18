@@ -9,7 +9,8 @@
 Линт `npm run lint`
 
 
-**Демо**: https://udobnaja.github.io/lesson-3/
+**Демо**: https://udobnaja.github.io/lesson-3/ <br>
+_Приложение не адаптировано под мобильные устройства_
 
 ### Описание проделанной работы
 
