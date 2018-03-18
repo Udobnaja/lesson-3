@@ -12,7 +12,6 @@ import { initPlanetGeometry, animatePlanet } from "./planet";
     let mediaStream = null;
 
     console.log({avaibleConstrains: navigator.mediaDevices.getSupportedConstraints()});
-    console.log({devices: navigator.mediaDevices.enumerateDevices().then(r => r)});
     
     function initializeMediaDeviceSupport() {
         if (navigator.mediaDevices === undefined) {
@@ -34,7 +33,7 @@ import { initPlanetGeometry, animatePlanet } from "./planet";
         }
     }
     
-    function startVideo(stream) {
+    function startStream(stream) {
 
         mediaStream = stream;
         visualizeAudioStream(stream);
@@ -52,7 +51,7 @@ import { initPlanetGeometry, animatePlanet } from "./planet";
         }
     }
     
-    function stopVideo(e) {
+    function stopStream(e) {
         console.log(e);
         removeTracksFromMediaStream();
         removeVideoFromCanvas();
@@ -75,14 +74,14 @@ import { initPlanetGeometry, animatePlanet } from "./planet";
         }
     }
 
-    function startGettingMediaStream() {
+    function requestMediaStream() {
         navigator.mediaDevices.getUserMedia(constraints)
-            .then(startVideo)
-            .catch(stopVideo);
+            .then(startStream)
+            .catch(stopStream);
     }
 
     initializeMediaDeviceSupport();
-    startGettingMediaStream();
+    requestMediaStream();
     initPlanetGeometry();
     animatePlanet();
 
@@ -91,7 +90,7 @@ import { initPlanetGeometry, animatePlanet } from "./planet";
         console.log({state: permissionStatus.state});
 
         permissionStatus.onchange = () => {
-            startGettingMediaStream();
+            requestMediaStream();
         };
     })
         .catch((e) => {
